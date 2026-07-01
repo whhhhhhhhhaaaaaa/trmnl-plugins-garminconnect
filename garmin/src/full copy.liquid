@@ -1,0 +1,99 @@
+{% assign battery_drain = body_battery_high | minus: body_battery_low %}
+{% if stress < 25 %}
+  {% assign stress_label = "Low" %}
+{% elsif stress < 50 %}
+  {% assign stress_label = "Moderate" %}
+{% elsif stress < 75 %}
+  {% assign stress_label = "High" %}
+{% else %}
+  {% assign stress_label = "Very High" %}
+{% endif %}
+{% assign hr_range = max_hr | minus: min_hr %}
+
+<div class="layout">
+  <div class="columns">
+
+    <!-- LEFT: the two "gauge" metrics -->
+    <div class="column">
+      <div class="item">
+        <div class="content">
+          <div class="progress-bar progress-bar--large progress-bar--emphasis-2">
+            <div class="content">
+              <span class="label">Steps</span>
+              <span class="value value--small">{{ steps }} / {{ goal }}</span>
+            </div>
+            <div class="track">
+              <div class="fill" style="width: {{ progress }}%"></div>
+            </div>
+          </div>
+          <span class="description">{{ distance_km | round: 2 }} km &middot; {{ active_minutes }} active min</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="content">
+          <div class="progress-bar progress-bar--large progress-bar--emphasis-3">
+            <div class="content">
+              <span class="label">Body Battery</span>
+              <span class="value value--small">{{ body_battery }}</span>
+            </div>
+            <div class="track">
+              <div class="fill" style="width: {{ body_battery }}%"></div>
+            </div>
+          </div>
+          <span class="description">Peak {{ body_battery_high }} &middot; Low {{ body_battery_low }} &middot; -{{ battery_drain }} today</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: 2x2 stat tiles -->
+    <div class="column">
+      <div class="columns">
+        <div class="column">
+          <div class="item">
+            <div class="content">
+              <span class="value value--medium">{{ resting_hr }}</span>
+              <span class="label">Resting HR</span>
+              <span class="description">{{ min_hr }}&ndash;{{ max_hr }} bpm ({{ hr_range }} range)</span>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="item">
+            <div class="content">
+              <span class="value value--medium">{{ stress }}</span>
+              <span class="label">Stress &middot; {{ stress_label }}</span>
+              <span class="description">Peak {{ stress_high }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <div class="item">
+            <div class="content">
+              <span class="value value--medium">{{ active_calories | round }}</span>
+              <span class="label">Active Cal</span>
+              <span class="description">{{ calories | round }} total</span>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="item">
+            <div class="content">
+              <span class="value value--medium">{{ highly_active_minutes }}</span>
+              <span class="label">Intense Min</span>
+              <span class="description">of {{ active_minutes }} active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="title_bar">
+  <span class="title">Health Stats</span>
+  <span class="instance">Synced {{ last_sync }}</span>
+</div>

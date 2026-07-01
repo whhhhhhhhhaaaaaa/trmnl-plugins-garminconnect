@@ -1,0 +1,122 @@
+<div class="layout layout--row gap--large">
+
+  <!-- TODAY -->
+  <div class="flex flex--col gap--large" style="flex: 1;">
+    <span class="title">Today</span>
+
+    <div class="progress-bar progress-bar--large progress-bar--emphasis-2">
+      <div class="content">
+        <span class="label">Steps</span>
+        <span class="value value--small">{{ steps | default: 0 }} / {{ goal | default: 10000 }}</span>
+      </div>
+      <div class="track">
+        <div class="fill" style="width: {{ progress | default: 0 }}%"></div>
+      </div>
+    </div>
+
+    <div class="grid grid--cols-2">
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value">{{ sleep_hours | default: 0 }}h</span>
+          <span class="label">Sleep</span>
+          {% if sleep_score %}
+            <span class="description">Score {{ sleep_score }}</span>
+          {% else %}
+            <span class="description">No score</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value">{{ body_battery | default: 0 }}</span>
+          <span class="label">Body Battery</span>
+          <span class="description">+{{ body_battery_charged | default: 0 }} / -{{ body_battery_drained | default: 0 }}</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value">{{ resting_hr | default: 0 }}</span>
+          <span class="label">Resting HR</span>
+          <span class="description">{{ hr_7day_avg | default: 0 }} bpm avg</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value">{{ intensity_minutes | default: 0 }}/{{ intensity_minutes_goal | default: 150 }}</span>
+          <span class="label">Intensity Min</span>
+          <span class="description">weekly goal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider--v"></div>
+
+  <!-- LAST RIDE -->
+  <div class="flex flex--col gap--large" style="flex: 1;">
+    <span class="title">Last Ride</span>
+
+    {% if has_ride %}
+      <span class="description">{{ ride_name }} &middot; {{ ride_when }}</span>
+
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value value--xxlarge" data-value-fit="true">{{ ride_distance_km | default: 0 }}</span>
+          <span class="label">km</span>
+        </div>
+      </div>
+
+      <div class="grid grid--cols-2">
+        <div class="item">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="value">{{ ride_duration_min | default: 0 }}</span>
+            <span class="label">min</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="value">{{ ride_avg_speed_kmh | default: 0 }}</span>
+            <span class="label">km/h avg</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="meta"></div>
+          <div class="content">
+            <span class="value">{{ ride_elevation_gain | default: 0 }}</span>
+            <span class="label">m elevation</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="meta"></div>
+          <div class="content">
+            {% if ride_avg_power %}
+              <span class="value">{{ ride_avg_power }}w</span>
+              <span class="label">Avg Power</span>
+            {% else %}
+              <span class="value">{{ ride_avg_hr | default: 0 }}</span>
+              <span class="label">Avg HR</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <span class="description">No cycling activity found on this account yet</span>
+    {% endif %}
+  </div>
+
+</div>
+
+<div class="title_bar">
+  <span class="title">Health &amp; Training</span>
+  <span class="instance">Synced {{ last_sync }} &middot; {{ minutes_since_sync }}m ago</span>
+</div>

@@ -1,0 +1,16 @@
+#
+# Changes to this file will be overwritten by `trmnlp pull`.
+#
+# Docs: https://help.trmnl.com/en/articles/10542599-importing-and-exporting-private-plugins#h_581fb988f0
+#
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: latest
+polling_url: 'http://127.0.0.1:8000/trmnl'
+polling_headers: ''
+name: vincent's garmin plugin
+refresh_interval: 60
